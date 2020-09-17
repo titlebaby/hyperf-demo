@@ -11,4 +11,8 @@ declare(strict_types=1);
  */
 use Hyperf\HttpServer\Router\Router;
 
-Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController::index');
+Router::addRoute(['GET', 'POST', 'HEAD'], '/index', 'App\Controller\IndexController::index');
+
+//Router::post('/create', 'App\Controller\HyUserController::create');
+
+//Router::get('/create', 'App\Controller\HyUserController::create');

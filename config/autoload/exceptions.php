@@ -11,8 +11,10 @@ declare(strict_types=1);
  */
 return [
     'handler' => [
+        // 这里的 http 对应 config/autoload/server.php 内的 server 所对应的 name 值
         'http' => [
             App\Exception\Handler\BusinessExceptionHandler::class,
+            \App\Exception\Handler\FooExceptionHandler::class,
         ],
     ],
 ];

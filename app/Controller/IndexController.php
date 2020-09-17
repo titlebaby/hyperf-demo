@@ -11,10 +11,14 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
-class IndexController extends Controller
+use App\Exception\FooException;
+
+class IndexController
 {
+    use BaseController;
     public function index()
     {
+        throw new FooException('Foo Exception...', 800);
         $user = $this->request->input('user', 'Hyperf');
         $method = $this->request->getMethod();
         return $this->response->success([

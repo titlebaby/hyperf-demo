@@ -15,7 +15,8 @@ use App\Kernel\Http\Response;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Psr\Container\ContainerInterface;
 
-abstract class Controller
+#abstract class
+trait BaseController
 {
     /**
      * @var ContainerInterface
