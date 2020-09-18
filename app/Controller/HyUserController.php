@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Service\HyUserService;
 
+use App\Utils\Log;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Annotation\RequestMapping;
@@ -63,5 +64,23 @@ class HyUserController
         $res = $this->hyUser->getList($page,$pageSize);
         return $this->response->success($res);
     }
+    /**
+     * @RequestMapping(path="/cache/{id:\d+}",method="get,post")
+     */
+    public function getOneByCache(RequestInterface $request, int $id)
+    {
+        $res = $this->hyUser->user($id);
+        //$res = $this->hyUser->user1($id);
+        return $this->response->success($res);
+    }
+    /**
+     * @RequestMapping(path="/update/{id:\d+}",method="get,post")
+     */
+    public function update(RequestInterface $request, int $id)
+    {
 
+        Log::get('yyy',"test_log")->info('111212122 in 2', ['name'=>'raoxiaoya']);
+        $res = $this->hyUser->updateUser($id);
+        return $this->response->success($res);
+    }
 }
