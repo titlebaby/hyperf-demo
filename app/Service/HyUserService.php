@@ -4,12 +4,33 @@ declare(strict_types=1);
 namespace App\Service;
 
 
+use App\Event\UserRegistered;
 use App\Model\HyUser;
 use Hyperf\Cache\Annotation\Cacheable;
-
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Hyperf\Di\Annotation\Inject;
 
 class HyUserService
 {
+    /**
+     * @Inject
+     * @var EventDispatcherInterface
+     */
+    public $eventDispatcher;
+
+
+    public function register($data){
+        //我们假设存在User这个实体
+        $user = new HyUser();
+        $user->name   = $data['name'];
+        $user->age    = $data['age'];
+        $user->status = $data['status'];
+        $res = $user->save();
+        $this->eventDispatcher->dispatch(new UserRegistered($user));
+        return $res;
+
+    }
+
     public function addUser($data)
     {
         /** @var HyUser $user */
@@ -72,5 +93,8 @@ class HyUserService
     public function unique(){
         return uniqid();
     }
+
+
+
 
 }

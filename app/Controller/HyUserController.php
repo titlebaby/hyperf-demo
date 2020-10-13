@@ -31,8 +31,8 @@ class HyUserController
     public function create(RequestInterface $request){
         try {
             $data = $request->getParsedBody();
-
-            $res = $this->hyUser->addUser($data);
+            $res = $this->hyUser->register($data);
+            //$res = $this->hyUser->addUser($data);
             return $this->response->success($res);
         }catch (\Exception  $e) {
 
