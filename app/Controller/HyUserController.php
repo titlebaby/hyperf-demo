@@ -10,10 +10,17 @@ use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use Hyperf\Di\Annotation\Inject;
-
+use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\HttpServer\Annotation\Middlewares;
+use App\Middleware\Auth\FooMiddleware;
+use Hyperf\Utils\Context;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * @Controller()
+ * @Middlewares({
+   @Middleware(FooMiddleware::class)
+ * })
  */
 class HyUserController
 {
@@ -31,6 +38,12 @@ class HyUserController
     public function create(RequestInterface $request){
         try {
             $data = $request->getParsedBody();
+            // 获取上下文中的所有属性，指定属性使用getAttribute('name')
+            $addValue = $this->request->getAttributes();
+            var_dump($addValue);
+            // 效果同上
+            $addValue = Context::get(ServerRequestInterface::class)->getAttributes();
+            var_dump($addValue,$data);die();
             $res = $this->hyUser->register($data);
             //$res = $this->hyUser->addUser($data);
             return $this->response->success($res);
